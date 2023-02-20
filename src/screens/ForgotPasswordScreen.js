@@ -5,41 +5,48 @@ import {
   SafeAreaView,
   StatusBar,
   StyleSheet,
+  Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 
 import {
+  fontSize,
   getHeight,
   getWidth,
-} from '../../common/GConstant';
-import {color} from '../../common/GColors';
-import AppButton from '../../common/GComponant/AppButton';
+} from '../common/GConstant';
+import {color} from '../common/GColors';
+import AppButton from '../common/GComponant/AppButton'
 import { Fumi } from 'react-native-textinput-effects';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import { CommonActions } from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+
+
 
 FontAwesomeIcon.loadFont();
-export default class AdminLoginScreen extends React.Component {
+export default class ForgotPasswordScreen extends React.Component {
   // Constructor method
   constructor(props) {
     super(props);
     this.state = {
-        email: "",
-        password: ""
+        email: "demo@grr.la",
     };
   }
 
 
 
   handleSubmit = () => {
+    const { email} = this.state
     let error = this.validation()
     if (error == "") {
-      this.props.navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{name: 'AdminDashBoardScreen'}],
-        }),
-      );
+        auth().sendPasswordResetEmail(email).then((response) => {
+            Alert.alert("","Please check your email !!!")
+            this.props.navigation.pop()
+        }).catch((error) => {
+            console.log("Error ==> ", error);
+            Alert.alert("",error.toString())
+        })
     }else{
         Alert.alert("",error)
     }
@@ -48,10 +55,6 @@ export default class AdminLoginScreen extends React.Component {
   validation = () => {
     if (this.state.email.trim().length == 0) {
         return "Please enter email"
-    }else if (this.state.password.trim().length == 0){
-        return "Please enter password"
-    }else if (this.state.email.trim() != "Admin@gmail.com" || this.state.password.trim() != "Admin@123"){
-        return "Please enter valid credentials"
     }
     return ""
   }
@@ -68,7 +71,7 @@ export default class AdminLoginScreen extends React.Component {
         <SafeAreaView />
         <Image
           style={style.imgLogo}
-          source={require('../../assets/images/Logo.png')}
+          source={require('../assets/images/Logo.png')}
           resizeMode="stretch"
         />
         <View style={{
@@ -76,7 +79,7 @@ export default class AdminLoginScreen extends React.Component {
             marginTop: getHeight(80)
         }}>
             <Fumi
-                label={'Admin email address'}
+                label={'Email address'}
                 iconClass={FontAwesomeIcon}
                 iconName={'user'}
                 iconColor={color.darkBlue}
@@ -89,24 +92,8 @@ export default class AdminLoginScreen extends React.Component {
                 value={this.state.email}
                 onChangeText={(text) => this.setState({email: text})}
             />
-
-            <Fumi
-                label={'Password'}
-                iconClass={FontAwesomeIcon}
-                iconName={'lock'}
-                iconColor={color.darkBlue}
-                value={this.state.password}
-                iconSize={20}
-                iconWidth={40}
-                inputPadding={16}
-                keyboardType={"ascii-capable"}
-                returnKeyType={"done"}
-                style={{marginTop: getHeight(20)}}
-                onChangeText={(text) => {this.setState({password: text})}}
-                secureTextEntry
-            />
         </View>
-        <AppButton style={style.btnSignup} title={'Login'} onPress={() => this.handleSubmit()}/>
+        <AppButton style={style.btnSignup} title={'Forgot Password'} onPress={() => this.handleSubmit()}/>
       </View>
     );
   }
@@ -126,4 +113,17 @@ const style = StyleSheet.create({
     marginTop: getHeight(50),
     marginHorizontal: getWidth(27),
   },
+  btnForgot: {
+    fontWeight: "500",
+    fontSize: fontSize.size14,
+    color: color.darkBlue
+  },
+
+
+  //View
+  vwForgot: {
+    marginHorizontal: getWidth(27),
+    marginTop: getHeight(10),
+    alignItems: "flex-end"
+  }
 });

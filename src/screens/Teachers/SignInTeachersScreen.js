@@ -28,13 +28,13 @@ import { CommonActions } from '@react-navigation/native';
 
 
 FontAwesomeIcon.loadFont();
-export default class SignInStudentScreen extends React.Component {
+export default class SignInTeachersScreen extends React.Component {
   // Constructor method
   constructor(props) {
     super(props);
     this.state = {
-        email: "demo1@grr.la",
-        password: "Test@1234"
+        email: "demo@grr.la",
+        password: "Test@123"
     };
   }
 
@@ -46,17 +46,17 @@ export default class SignInStudentScreen extends React.Component {
     if (error == "") {
       auth().signInWithEmailAndPassword(email,password).then((response) => {
         console.log("User Data ===> ", response)
-        firestore().collection('user').where("uid", "==", response.user?.uid).where("role", "==", "student").get().then(querySnapShot => {
-          if(querySnapShot.empty) {
+        firestore().collection('user').where("uid", "==", response.user?.uid).where("role", "==", "teacher").get().then(querySnapShot => {
+          if (querySnapShot.empty) {
             Alert.alert("","Please check your credentials")
-          }else{
+          }else {
             querySnapShot.docs.map((item) => {
               console.log("Data  ===> ", item.data())
               setData(asyncStorageKey.userData, item.data())
               this.props.navigation.dispatch(
                 CommonActions.reset({
                   index: 0,
-                  routes: [{name: 'StudentDashBoardScreen'}],
+                  routes: [{name: 'TeacherDashBoardScreen'}],
                 }),
               );
             })

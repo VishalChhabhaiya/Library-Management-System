@@ -1,7 +1,9 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React from 'react';
 import {
-  Dimensions,
+  Dimensions, View,Text
 } from 'react-native';
+import { color } from './GColors';
 
 export const screenSize = {
   height: Dimensions.get('window').height,
@@ -51,3 +53,52 @@ export const fontSize = {
 
 // Touchable opacity alpha
 export const opacity = 0.6;
+
+
+export const emptyComponent = msg => {
+  return (
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 50,
+        alignSelf: 'center',
+      }}>
+      <Text
+        style={{
+          fontWeight: "bold",
+          fontSize: fontSize.size16,
+          color: color.darkBlue,
+        }}>
+        {msg}
+      </Text>
+    </View>
+  );
+};
+
+
+// Set value in encrypted storage
+export async function setData(key, value) {
+  try {
+    await AsyncStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    console.log('[Async Storage] Error in set data : ', error);
+  }
+}
+
+// Get value from Encrypted storage
+export async function getData(key, callback) {
+  try {
+    var value = await AsyncStorage.getItem(key);
+
+    callback(JSON.parse(value));
+  } catch (error) {
+    console.log('[Async Storage] Error in get data : ', error);
+  }
+}
+
+
+export const asyncStorageKey = {
+  userData: 'userData',
+};

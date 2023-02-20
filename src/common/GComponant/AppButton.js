@@ -1,7 +1,7 @@
 import React from 'react';
-import {Platform, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {Image, Platform, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {color} from '../GColors';
-import {fontSize, getHeight, opacity} from '../GConstant';
+import {fontSize, getHeight, getWidth, opacity} from '../GConstant';
 import PropTypes from 'prop-types';
 
 export default function AppButton(props) {
@@ -10,6 +10,9 @@ export default function AppButton(props) {
       activeOpacity={opacity}
       style={[style.btnStyleBlue, props.style]}
       onPress={props.onPress}>
+        {
+          props.image ? <Image source={props.image} style={{marginRight: getWidth(10)}}/> : null
+        }
       <Text style={style.lblWhite}>{props.title}</Text>
     </TouchableOpacity>
   );
@@ -24,6 +27,7 @@ const style = StyleSheet.create({
     borderRadius: getHeight(53) / 2,
     height: getHeight(53),
     backgroundColor: color.darkBlue,
+    flexDirection: "row"
   },
   lblWhite: {
     fontWeight: 'bold',
