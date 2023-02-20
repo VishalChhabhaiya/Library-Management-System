@@ -55,7 +55,7 @@ export default class WelcomeScreen extends React.Component {
           }}>
           <AppButton style={style.btnSignup} title={'Get Started With Admin !!!'} onPress={() => this.props.navigation.navigate('AdminLoginScreen')} />
           <AppButton style={style.btnSignup} title={'Get Started With Student !!!'} onPress={() => this.props.navigation.navigate('SignUpStudentScreen')} />
-          <AppButton style={style.btnSignup} title={'Get Started With Teacher !!!'} />
+          <AppButton style={style.btnSignup} title={'Get Started With Teacher !!!'} onPress={() => this.props.navigation.navigate('SignUpTeachersScreen')}/>
         </View>
       </View>
     );

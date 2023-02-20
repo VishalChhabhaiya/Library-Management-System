@@ -5,20 +5,17 @@
  * @format
  * @flow strict-local
  */
-
 import React from 'react';
 import {View, Text} from 'react-native';
 import MainNavigation, {navigationRef} from './src/Navigation/MainNavigation';
-import AdminLoginScreen from './src/screens/Admin/AdminLoginScreen';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import Splash from './src/screens/SplashScreen';
-// import WelcomeScreen from './src/screens/WelcomeScreen';
-// import WelcomeScreenOther from './src/screens/WelcomeScreenOther';
 
 export default class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      initialStack: 'WelcomeScreen',
+      initialStack: 'TeacherDashBoardScreen',
       isLoading: true,
     };
   }
@@ -29,10 +26,10 @@ export default class App extends React.Component {
       });
     }, 2500);
 
-    
   }
   render() {
     return (
+    <GestureHandlerRootView style={{flex: 1}}>
       <View
         style={{
           flex: 1,
@@ -40,15 +37,13 @@ export default class App extends React.Component {
         {this.state.isLoading ? (
           <Splash />
         ) : (
-          // <AdminLoginScreen />
-          // <WelcomeScreenOther />
-          
             <MainNavigation
               initialStack={this.state.initialStack}
               ref={navigationRef}
             />
         )}
       </View>
+    </GestureHandlerRootView>
     );
   }
 }
