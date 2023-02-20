@@ -4,10 +4,7 @@
  *
  * @format
  * @flow strict-local
- * 
- * 
  */
-
 import React from 'react';
 import {View, Text} from 'react-native';
 import MainNavigation, {navigationRef} from './src/Navigation/MainNavigation';
@@ -29,7 +26,6 @@ export default class App extends React.Component {
       });
     }, 2500);
 
-    
   }
   render() {
     return (
@@ -41,12 +37,10 @@ export default class App extends React.Component {
         {this.state.isLoading ? (
           <Splash />
         ) : (
-          
             <MainNavigation
               initialStack={this.state.initialStack}
               ref={navigationRef}
             />
-          
         )}
       </View>
     </GestureHandlerRootView>
