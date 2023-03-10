@@ -28,6 +28,7 @@ export default class AllBooksListScreen extends React.Component {
   }
 
   componentDidMount() {
+
     // Header navigation setup
     this.props.navigation.addListener('focus', () => {
       this.getGerneData();
@@ -52,6 +53,7 @@ export default class AllBooksListScreen extends React.Component {
       headerTitle: "Books",
       headerShadowVisible: false, // Use to hide shadow under the navigation bar
     });
+
     // ========================================================================
   }
 
@@ -70,7 +72,6 @@ getGerneData = async () => {
     gerneData: gerneData
   })
 }
-
 
 getBookData = async () => {
   let bookData = []
