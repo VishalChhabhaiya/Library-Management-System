@@ -13,7 +13,7 @@ import {
   } from 'react-native';
   import React, {Component} from 'react';
   import {
-      fontSize,
+    fontSize,
     getHeight,
     getWidth,
     opacity,
