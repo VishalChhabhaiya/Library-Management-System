@@ -56,7 +56,6 @@ export default class AllBooksListScreen extends React.Component {
 
     // ========================================================================
   }
-
 getGerneData = async () => {
   let gerneData = []
   await firestore().collection('gerne').get().then((queryShot) => {
