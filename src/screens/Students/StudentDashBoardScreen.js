@@ -14,8 +14,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-// import Carousel from 'react-native-snap-carousel';
-// import {image} from '../../Assets/Images';
 import {color} from '../../common/GColors';
 import {
   asyncStorageKey,

@@ -33,8 +33,8 @@ export default class SignInTeachersScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        email: "demo@grr.la",
-        password: "Test@123"
+        email: "",
+        password: ""
     };
   }
 

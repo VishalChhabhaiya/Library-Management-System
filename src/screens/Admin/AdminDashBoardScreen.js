@@ -73,7 +73,7 @@ handleSignOut = () => {
         <Text style={style.lblTitle}>{"See all Gernes"}</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={style.vwGernes} onPress={() => Alert.alert("","Under Development")}>
+      <TouchableOpacity style={style.vwGernes} onPress={() => this.props.navigation.navigate('AllBooksListScreen')}>
         <Text style={style.lblTitle}>{"See all Books"}</Text>
       </TouchableOpacity>
       </ScrollView>

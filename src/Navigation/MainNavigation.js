@@ -20,6 +20,9 @@ import TeacherDashBoardScreen from "../screens/Teachers/TeacherDashBoardScreen";
 import EventListScreen from "../screens/Teachers/EventListScreen";
 import AddEventScreen from "../screens/Teachers/AddEventScreen";
 import SelectDateScreen from "../screens/Teachers/SelectDateScreen";
+import AllBooksListScreen from "../screens/Admin/Books/AllBooksListScreen";
+import AddBookScreen from "../screens/Admin/Books/AddBookScreen";
+import SelectGernePopup from "../screens/Admin/Books/SelectGernePopup";
 
 const Stack = createNativeStackNavigator();
 const ModalStack = createNativeStackNavigator();
@@ -159,6 +162,30 @@ export default class MainNavigation extends React.Component {
             }}
           />
 
+          <Stack.Screen
+            name="AllBooksListScreen"
+            component={AllBooksListScreen}
+            options={{
+              headerShown: true,
+              title: "",
+              headerBackVisible: true,
+              headerTitleAlign: "center",
+              headerShadowVisible: false
+            }}
+          />
+
+          <Stack.Screen
+            name="AddBookScreen"
+            component={AddBookScreen}
+            options={{
+              headerShown: true,
+              title: "",
+              headerBackVisible: true,
+              headerTitleAlign: "center",
+              headerShadowVisible: false
+            }}
+          />
+
 
           <Stack.Screen
             name="StudentDashBoardScreen"
@@ -267,6 +294,15 @@ export default class MainNavigation extends React.Component {
             <ModalStack.Screen
               name="SelectDateScreen"
               component={SelectDateScreen}
+              options={{
+                headerShown: false,
+                headerBackVisible: false,
+              }}
+            />
+
+            <ModalStack.Screen
+              name="SelectGernePopup"
+              component={SelectGernePopup}
               options={{
                 headerShown: false,
                 headerBackVisible: false,
