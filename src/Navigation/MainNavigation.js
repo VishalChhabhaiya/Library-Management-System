@@ -23,6 +23,10 @@ import SelectDateScreen from "../screens/Teachers/SelectDateScreen";
 import AllBooksListScreen from "../screens/Admin/Books/AllBooksListScreen";
 import AddBookScreen from "../screens/Admin/Books/AddBookScreen";
 import SelectGernePopup from "../screens/Admin/Books/SelectGernePopup";
+import BookSlotScreen from "../screens/BookSlotScreen";
+import CreateComputerSlotScreen from "../screens/CreateComputerSlotScreen";
+import SelectTimeScreen from "../screens/SelectTimeScreen";
+import CreateReadingSlotScreen from "../screens/CreateReadingSlotScreen";
 
 const Stack = createNativeStackNavigator();
 const ModalStack = createNativeStackNavigator();
@@ -270,6 +274,43 @@ export default class MainNavigation extends React.Component {
               headerShadowVisible: false
             }}
           />
+
+          <Stack.Screen
+            name="BookSlotScreen"
+            component={BookSlotScreen}
+            options={{
+              headerShown: true,
+              title: "",
+              headerBackVisible: true,
+              headerTitleAlign: "center",
+              headerShadowVisible: false
+            }}
+          />
+
+          <Stack.Screen
+            name="CreateComputerSlotScreen"
+            component={CreateComputerSlotScreen}
+            options={{
+              headerShown: true,
+              title: "",
+              headerBackVisible: true,
+              headerTitleAlign: "center",
+              headerShadowVisible: false
+            }}
+          />
+
+          <Stack.Screen
+            name="CreateReadingSlotScreen"
+            component={CreateReadingSlotScreen}
+            options={{
+              headerShown: true,
+              title: "",
+              headerBackVisible: true,
+              headerTitleAlign: "center",
+              headerShadowVisible: false
+            }}
+          />
+
         </Stack.Navigator>
       );
     };
@@ -308,6 +349,15 @@ export default class MainNavigation extends React.Component {
                 headerBackVisible: false,
               }}
             />
+
+            <ModalStack.Screen
+            name="SelectTimeScreen"
+            component={SelectTimeScreen}
+            options={{
+              headerShown: false,
+              headerBackVisible: false,
+            }}
+          />
            
           </ModalStack.Navigator>
         </NavigationContainer>

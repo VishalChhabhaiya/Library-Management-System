@@ -33,8 +33,8 @@ export default class SignInTeachersScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-        email: "",
-        password: ""
+        email: "demot@grr.la",
+        password: "Test@123"
     };
   }
 
@@ -111,7 +111,7 @@ export default class SignInTeachersScreen extends React.Component {
                 inputPadding={16}
                 keyboardType={"email-address"}
                 returnKeyType={"done"}
-                style={{marginTop: getHeight(20)}}
+                style={style.txtInput}
                 value={this.state.email}
                 onChangeText={(text) => this.setState({email: text})}
             />
@@ -127,7 +127,7 @@ export default class SignInTeachersScreen extends React.Component {
                 inputPadding={16}
                 keyboardType={"ascii-capable"}
                 returnKeyType={"done"}
-                style={{marginTop: getHeight(20)}}
+                style={style.txtInput}
                 onChangeText={(text) => {this.setState({password: text})}}
                 secureTextEntry
             />
@@ -167,5 +167,13 @@ const style = StyleSheet.create({
     marginHorizontal: getWidth(27),
     marginTop: getHeight(10),
     alignItems: "flex-end"
-  }
+  },
+
+  //Text Input
+  txtInput: {
+    marginTop: getHeight(20),
+    borderColor: color.cC4C4C4,
+    borderWidth:1,
+    borderRadius: getHeight(5)
+  },
 });

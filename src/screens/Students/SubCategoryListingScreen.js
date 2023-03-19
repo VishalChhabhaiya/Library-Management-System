@@ -17,6 +17,7 @@ import {
   getWidth,
 } from '../../common/GConstant';
 import {Books} from "../../assets/books";
+import firestore from '@react-native-firebase/firestore';
 
 
 export default class SubCategoryListing extends Component {
@@ -27,12 +28,20 @@ export default class SubCategoryListing extends Component {
       title: props.route.params?.title,
       searchTitle: '',
       category_id: props.route.params?.category_id,
-      oData: Books,
-      data: Books
+      oData: [],
+      data: []
     };
   }
+
+
   componentDidMount() {
     console.log('DATA : ', this.props.route.params?.data);
+    if (this.props.route.params?.data != undefined) {
+      let data = this.props.route.params?.data
+      this.getBookData(data?.id)
+    }
+
+
     this.props.navigation.setOptions({
       headerShadowVisible: false,
       title: this.props.route.params?.data.name,
@@ -40,9 +49,25 @@ export default class SubCategoryListing extends Component {
     });
   }
 
+  getBookData = async (id) => {
+    let bookData = []
+    await firestore().collection('book').where("gerneId","==", id).get().then((queryShot) => {
+      queryShot.forEach((item) => {
+        var book = item.data()
+        book["id"] = item.id
+        bookData.push(book)
+      })
+    })
+
+    this.setState({
+      oData: bookData,
+      data: bookData
+    })
+  }
+
   handleSearch = () => {
     let data = this.state.oData.filter(item => {
-      return item?.title
+      return item?.name
         .toLowerCase()
         .match(this.state.searchTitle.toLowerCase());
     });
@@ -78,7 +103,6 @@ export default class SubCategoryListing extends Component {
             return (
                 <Pressable
                   onPress={() => {
-                    console.log('Details Data : ', item);
                     this.props.navigation.navigate('BookDetailsScreen', {
                       data: item.item,
                     });
@@ -86,11 +110,11 @@ export default class SubCategoryListing extends Component {
                   <View style={styles.vwBooks}>
                     <View style={styles.image}>
                       <Image
-                        source={{uri: item.item?.thumbnailUrl}}
+                        source={require("../../assets/images/Book.png")}
                         style={{height: '100%', width: '100%', resizeMode: 'contain'}}
                       />
                     </View>
-                    <Text style={styles.text}>{item.item?.title}</Text>
+                    <Text style={styles.text}>{item.item?.name}</Text>
                     <Image source={require("../../assets/images/RightArow.png")} style={{marginRight: getWidth(20)}} />
                   </View>
                 </Pressable>

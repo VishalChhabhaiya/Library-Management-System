@@ -193,7 +193,8 @@ export default class AddBookScreen extends React.Component {
         <ScrollView>
           <View style={{
               marginHorizontal: getWidth(27),
-              marginTop: getHeight(50)
+              marginTop: getHeight(50),
+              marginBottom: getHeight(30)
           }}>
             <Fumi
                 label={'BOOK NAME'}
@@ -258,7 +259,7 @@ export default class AddBookScreen extends React.Component {
                 iconSize={20}
                 iconWidth={40}
                 inputPadding={16}
-                keyboardType={"ascii-capable"}
+                keyboardType={"number-pad"}
                 returnKeyType={"done"}
                 style={style.txtInput}
                 value={this.state.stocks}

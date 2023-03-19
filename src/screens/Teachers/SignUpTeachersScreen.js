@@ -127,7 +127,7 @@ export default class SignUpTeachersScreen extends React.Component {
                   inputPadding={16}
                   keyboardType={"ascii-capable"}
                   returnKeyType={"done"}
-                  style={{marginTop: getHeight(20)}}
+                  style={style.txtInput}
                   value={this.state.name}
                   onChangeText={(text) => this.setState({name: text})}
               />
@@ -140,9 +140,8 @@ export default class SignUpTeachersScreen extends React.Component {
                   iconWidth={40}
                   inputPadding={16}
                   keyboardType={"email-address"}
-                  
                   returnKeyType={"done"}
-                  style={{marginTop: getHeight(20)}}
+                  style={style.txtInput}
                   value={this.state.email}
                   onChangeText={(text) => this.setState({email: text})}
               />
@@ -156,7 +155,7 @@ export default class SignUpTeachersScreen extends React.Component {
                   inputPadding={16}
                   keyboardType={"number-pad"}
                   returnKeyType={"done"}
-                  style={{marginTop: getHeight(20)}}
+                  style={style.txtInput}
                   value={this.state.phone}
                   maxLength={10}
                   onChangeText={(text) => this.setState({phone: text})}
@@ -171,7 +170,7 @@ export default class SignUpTeachersScreen extends React.Component {
                   inputPadding={16}
                   keyboardType={"email-address"}
                   returnKeyType={"done"}
-                  style={{marginTop: getHeight(20)}}
+                  style={style.txtInput}
                   value={this.state.department}
                   maxLength={10}
                   onChangeText={(text) => this.setState({department: text})}
@@ -187,7 +186,7 @@ export default class SignUpTeachersScreen extends React.Component {
                   inputPadding={16}
                   keyboardType={"ascii-capable"}
                   returnKeyType={"done"}
-                  style={{marginTop: getHeight(20)}}
+                  style={style.txtInput}
                   onChangeText={(text) => {this.setState({password: text})}}
                   secureTextEntry
               />
@@ -203,7 +202,7 @@ export default class SignUpTeachersScreen extends React.Component {
                   inputPadding={16}
                   keyboardType={"ascii-capable"}
                   returnKeyType={"done"}
-                  style={{marginTop: getHeight(20)}}
+                  style={style.txtInput}
                   onChangeText={(text) => {this.setState({confirmPassword: text})}}
                   secureTextEntry
               />
@@ -257,5 +256,13 @@ const style = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     marginTop: getHeight(20)
-  }
+  },
+
+  //Text Input
+  txtInput: {
+    marginTop: getHeight(20),
+    borderColor: color.cC4C4C4,
+    borderWidth:1,
+    borderRadius: getHeight(5)
+  },
 });

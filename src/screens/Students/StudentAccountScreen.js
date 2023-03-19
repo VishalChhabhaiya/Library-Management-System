@@ -90,6 +90,23 @@ export default class StudentAccountScreen extends React.Component {
 
           <TouchableOpacity 
             style={styles.vwGernes} 
+            onPress={() => this.props.navigation.navigate('CreateComputerSlotScreen')}
+          >
+            <Image source={require('../../assets/images/computer.png')} style={{marginRight: getWidth(10), height: getHeight(40), width: getHeight(40), aspectRatio: 1}}/>
+            <Text style={styles.lblTitle}>{"Book Computer Surfing"}</Text>
+          </TouchableOpacity>
+
+
+          <TouchableOpacity 
+            style={styles.vwGernes} 
+            onPress={() => this.props.navigation.navigate('CreateReadingSlotScreen')}
+          >
+            <Image source={require('../../assets/images/readBook.png')} style={{marginRight: getWidth(10), height: getHeight(40), width: getHeight(40), aspectRatio: 1}}/>
+            <Text style={styles.lblTitle}>{"Book Library Reading Slot"}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.vwGernes} 
             onPress={() => this.props.navigation.navigate('EventListScreen')}
           >
             <Image source={require('../../assets/images/Event.png')} style={{marginRight: getWidth(10), height: getHeight(40), width: getHeight(40), aspectRatio: 1}}/>
