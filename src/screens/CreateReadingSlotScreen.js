@@ -13,7 +13,7 @@ import {color} from '../common/GColors';
 import AppButton from '../common/GComponant/AppButton';
 import { asyncStorageKey, fontSize, getData, getHeight, getWidth, } from '../common/GConstant';
 
-export default class CreateComputerSlotScreen extends Component {
+export default class CreateReadingSlotScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -135,7 +135,7 @@ export default class CreateComputerSlotScreen extends Component {
 
     console.log("DICT DATA ===> ", dictData)
     firestore()
-    .collection('computerBooking')
+    .collection('readBooking')
     .add(dictData)
     .then(res => {
       console.log('ADDED ===>', res);
@@ -161,11 +161,11 @@ export default class CreateComputerSlotScreen extends Component {
           <View style={styles.mainHeader}>
             <View>
               <Text style={styles.bookInfo}>
-                {"Computer Slot Info"}
+                {"Reading Slot Info"}
               </Text>
             </View>
             <Image
-              source={require("../assets/images/computer.png")}
+              source={require("../assets/images/readBook.png")}
               style={styles.imgHeaderRight}
             />
           </View>
