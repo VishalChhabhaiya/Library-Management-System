@@ -10,9 +10,7 @@ import {
 } from 'react-native';
 import {color} from '../common/GColors';
 import AppButton from '../common/GComponant/AppButton';
-import { asyncStorageKey, fontSize, getData, getHeight, getWidth, } from '../common/GConstant';
-import firestore from '@react-native-firebase/firestore';
-
+import { fontSize, getHeight, getWidth, } from '../common/GConstant';
 
 export default class BookSlotScreen extends Component {
   constructor(props) {
@@ -20,8 +18,7 @@ export default class BookSlotScreen extends Component {
     this.state = {
       data: props.route.params?.data,
       fromDate: "",
-      toDate: "",
-      userData: undefined
+      toDate: ""
     };
   }
 
@@ -76,12 +73,6 @@ export default class BookSlotScreen extends Component {
 
   // Life cycle method
   componentDidMount() {
-    console.log("Book Data ===> ", this.props.route.params.data)
-    getData(asyncStorageKey.userData, data => {
-      this.setState({
-        userData: data
-      })
-    })
     this.props.navigation.setOptions({
       title: '',
       headerShadowVisible: false, // Use to hide shadow under the navigation bar
@@ -162,45 +153,7 @@ export default class BookSlotScreen extends Component {
     this.setState({
       toDate: date
     }) 
-  }
-
-  handleValidation = () => {
-    if (this.state.fromDate == "") {
-      Alert.alert("","Please select from date")
-    }else if (this.state.toDate == "") {
-      Alert.alert("","Please select to date")
-    }else{
-      this.handleBookSlot()
-    }
-  }
-
-  handleBookSlot = () => {
-    let dictData = {
-      toDate: this.state.toDate,
-      fromDate: this.state.fromDate,
-      uid: this.state.userData?.uid,
-      name: this.state.userData?.name,
-      email: this.state.userData.email,
-      bookID: this.state.data.id,
-      bookName: this.state.data.name,
-      gerneId: this.state.data.gerneId
-    }
-
-    console.log("DICT DATA ===> ", dictData)
-    firestore()
-    .collection('booksBooking')
-    .add(dictData)
-    .then(res => {
-      console.log('ADDED ===>', res);
-      Alert.alert("",
-        'Your Booking has been added successfully...',
-      );
-      this.props.navigation.pop();
-    })
-    .catch(error => {
-      console.log('Firebase Error : ' + error);
-    });
-  }
+}
 
   render() {
     const {
@@ -246,7 +199,7 @@ export default class BookSlotScreen extends Component {
         {/* Proceed to Book with book */}
         <AppButton
             title={"Proceed to book"}
-            onPress={() => this.handleValidation()}
+            onPress={this.onPressAddBooking}
             style={{
               marginHorizontal: getWidth(20),
               bottom: 20

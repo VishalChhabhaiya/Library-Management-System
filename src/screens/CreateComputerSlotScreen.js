@@ -169,11 +169,11 @@ export default class CreateComputerSlotScreen extends Component {
               style={styles.imgHeaderRight}
             />
           </View>
-          {this.renderHeaderList("Select Booking Date")}
+          {this.renderHeaderList("Select Booking From Date")}
           {this.renderDataView(this.state.fromDate, () => this.props.navigation.navigate('SelectDateScreen',{
             handleDate: this.handleFromDate,
             index: false
-          }), require("../assets/images/clock.png"), "Select Date")}
+          }), require("../assets/images/clock.png"), "From Date")}
           {this.renderHeaderList("Select Time Slot")}
           {this.renderDataView(this.state.timing, () => this.props.navigation.navigate('SelectTimeScreen',{
             handleTime: this.handleTime,
