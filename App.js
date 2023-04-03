@@ -6,7 +6,6 @@
  * @flow strict-local
  */
 
-
 import React from 'react';
 import {View, Text} from 'react-native';
 import MainNavigation, {navigationRef} from './src/Navigation/MainNavigation';
