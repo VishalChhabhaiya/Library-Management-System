@@ -52,6 +52,7 @@ export default class SignInTeachersScreen extends React.Component {
           }else {
             querySnapShot.docs.map((item) => {
               console.log("Data  ===> ", item.data())
+              item.data().id = item.id
               setData(asyncStorageKey.userData, item.data())
               this.props.navigation.dispatch(
                 CommonActions.reset({

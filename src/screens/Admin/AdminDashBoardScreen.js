@@ -69,13 +69,17 @@ handleSignOut = () => {
           resizeMode="stretch"
         />
       <ScrollView>
-      <TouchableOpacity style={style.vwGernes} onPress={() => this.props.navigation.navigate('AllGernesScreen')}>
-        <Text style={style.lblTitle}>{"See all Gernes"}</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={style.vwGernes} onPress={() => this.props.navigation.navigate('AllGernesScreen')}>
+          <Text style={style.lblTitle}>{"See all Gernes"}</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={style.vwGernes} onPress={() => this.props.navigation.navigate('AllBooksListScreen')}>
-        <Text style={style.lblTitle}>{"See all Books"}</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={style.vwGernes} onPress={() => this.props.navigation.navigate('AllBooksListScreen')}>
+          <Text style={style.lblTitle}>{"See all Books"}</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={style.vwGernes} onPress={() => this.props.navigation.navigate('AdminNoticeListScreen')}>
+          <Text style={style.lblTitle}>{"See all Notifications"}</Text>
+        </TouchableOpacity>
       </ScrollView>
       </View>
     );

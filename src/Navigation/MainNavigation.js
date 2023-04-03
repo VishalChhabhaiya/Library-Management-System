@@ -27,6 +27,9 @@ import BookSlotScreen from "../screens/BookSlotScreen";
 import CreateComputerSlotScreen from "../screens/CreateComputerSlotScreen";
 import SelectTimeScreen from "../screens/SelectTimeScreen";
 import CreateReadingSlotScreen from "../screens/CreateReadingSlotScreen";
+import AdminNoticeListScreen from "../screens/Admin/AdminNoticeListScreen";
+import AddNotificationScreen from "../screens/Admin/AddNotificationScreen";
+import NotificationListScreen from "../screens/NotificationListScreen";
 
 const Stack = createNativeStackNavigator();
 const ModalStack = createNativeStackNavigator();
@@ -310,6 +313,44 @@ export default class MainNavigation extends React.Component {
               headerShadowVisible: false
             }}
           />
+
+          <Stack.Screen
+            name="AdminNoticeListScreen"
+            component={AdminNoticeListScreen}
+            options={{
+              headerShown: true,
+              title: "",
+              headerBackVisible: true,
+              headerTitleAlign: "center",
+              headerShadowVisible: false
+            }}
+          />
+
+
+          <Stack.Screen
+            name="AddNotificationScreen"
+            component={AddNotificationScreen}
+            options={{
+              headerShown: true,
+              title: "",
+              headerBackVisible: true,
+              headerTitleAlign: "center",
+              headerShadowVisible: false
+            }}
+          />
+
+          <Stack.Screen
+            name="NotificationListScreen"
+            component={NotificationListScreen}
+            options={{
+              headerShown: true,
+              title: "",
+              headerBackVisible: true,
+              headerTitleAlign: "center",
+              headerShadowVisible: false
+            }}
+          />
+
 
         </Stack.Navigator>
       );

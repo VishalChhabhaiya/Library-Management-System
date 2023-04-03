@@ -138,7 +138,6 @@ export default class CreateReadingSlotScreen extends Component {
     .collection('readBooking')
     .add(dictData)
     .then(res => {
-      console.log('ADDED ===>', res);
       Alert.alert("",
         'Your Booking has been added successfully...',
       );
@@ -147,6 +146,19 @@ export default class CreateReadingSlotScreen extends Component {
     .catch(error => {
       console.log('Firebase Error : ' + error);
     });
+  }
+
+
+  handleTimeNavigation = () => {
+    if (this.state.fromDate.trim() == ""){
+      Alert.alert("","Please select date");
+    }else{
+        this.props.navigation.navigate('SelectTimeScreen',{
+        handleTime: this.handleTime,
+        date: this.state.fromDate,
+        type: "reading"
+      })
+    }
   }
 
   render() {
@@ -175,9 +187,7 @@ export default class CreateReadingSlotScreen extends Component {
             index: false
           }), require("../assets/images/clock.png"), "Select Date")}
           {this.renderHeaderList("Select Time Slot")}
-          {this.renderDataView(this.state.timing, () => this.props.navigation.navigate('SelectTimeScreen',{
-            handleTime: this.handleTime,
-          }), require("../assets/images/clock.png"), "Time Slot")}
+          {this.renderDataView(this.state.timing, () => this.handleTimeNavigation(), require("../assets/images/clock.png"), "Time Slot")}
           
     
         </ScrollView>

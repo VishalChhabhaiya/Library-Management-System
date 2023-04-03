@@ -255,7 +255,8 @@ const style = StyleSheet.create({
     marginHorizontal: getWidth(27), 
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: getHeight(20)
+    marginTop: getHeight(20),
+    marginBottom: getHeight(20)
   },
 
   //Text Input

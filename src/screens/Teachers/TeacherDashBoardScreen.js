@@ -52,7 +52,7 @@ export default class TeacherDashBoardScreen extends React.Component {
     this.props.navigation.setOptions({
       headerLeft: () => (
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('StudentAccountScreen')}
+          onPress={() => this.props.navigation.navigate('TeacherAccountScreen')}
           style={{padding: getWidth(4)}}>
           <Image resizeMode="contain" source={require("../../assets/images/menu.png")} />
         </TouchableOpacity>

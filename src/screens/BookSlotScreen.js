@@ -10,7 +10,10 @@ import {
 } from 'react-native';
 import {color} from '../common/GColors';
 import AppButton from '../common/GComponant/AppButton';
-import { fontSize, getHeight, getWidth, } from '../common/GConstant';
+import { asyncStorageKey, fontSize, getData, getHeight, getWidth, } from '../common/GConstant';
+import firestore from '@react-native-firebase/firestore';
+import moment from 'moment';
+
 
 export default class BookSlotScreen extends Component {
   constructor(props) {
@@ -18,7 +21,11 @@ export default class BookSlotScreen extends Component {
     this.state = {
       data: props.route.params?.data,
       fromDate: "",
-      toDate: ""
+      fromActualDate: "",
+      toDate: "",
+      toActualDate: "",
+      userData: undefined,
+      isAvailable: true
     };
   }
 
@@ -73,6 +80,12 @@ export default class BookSlotScreen extends Component {
 
   // Life cycle method
   componentDidMount() {
+    console.log("Book Data ===> ", this.props.route.params.data)
+    getData(asyncStorageKey.userData, data => {
+      this.setState({
+        userData: data
+      })
+    })
     this.props.navigation.setOptions({
       title: '',
       headerShadowVisible: false, // Use to hide shadow under the navigation bar
@@ -143,17 +156,116 @@ export default class BookSlotScreen extends Component {
   }
 
   handleFromDate = (date) => {
+    let newDate = moment(date).unix()
+    console.log("DATE TO ====> ", newDate)
       this.setState({
-        fromDate: date
+        fromDate: date,
+        fromActualDate: newDate
       })
+
+    if (this.state.fromActualDate != "" && this.state.toActualDate != "") {
+      this.handleBookedData()
+    }
   }
 
   handleToDate = (date) => {
-    console.log("DATE ====> ", date)
+    let newDate = moment(date).unix()
+    console.log("DATE TO ====> ", newDate)
+
     this.setState({
-      toDate: date
-    }) 
-}
+      toDate: date,
+      toActualDate: newDate
+    }, () => this.handleBookedData()) 
+  }
+
+  handleBookedData = () => {
+    let data = []
+    firestore().collection('booksBooking')
+    .where("bookID","==", this.state.data?.id).get()
+    .then((queryShot) => {
+      if (queryShot.empty) {
+        console.log("No Data Found !!!")
+      }else{
+        queryShot.forEach((item) => {
+          let toTime = item.data().toActualDate
+          let fromTime = item.data().fromActualDate
+          if (  
+            (this.state.fromActualDate >= fromTime && this.state.fromActualDate <= toTime) ||
+              (this.state.toActualDate >= fromTime && this.state.toActualDate <= toTime) || 
+              (this.state.fromActualDate < fromTime && this.state.toActualDate >= toTime)) {
+              data.push(item.data())
+          }
+        })
+
+        if (data.length == 0) {
+          this.setState({
+            isAvailable: true
+          })
+        }else{
+          this.setState({
+            isAvailable: false
+          })
+          Alert.alert("","Book not Available")
+        }
+      }
+    }).catch((error) => {
+      console.log("Error ===> ", error)
+    })
+  }
+
+  handleValidation = () => {
+    if (this.state.fromDate == "") {
+      Alert.alert("","Please select from date")
+    }else if (this.state.toDate == "") {
+      Alert.alert("","Please select to date")
+    }else{
+      this.handleBookSlot()
+    }
+  }
+
+  handleBookSlot = () => {
+    let dictData = {
+      toDate: this.state.toDate,
+      fromDate: this.state.fromDate,
+      toActualDate: this.state.toActualDate,
+      fromActualDate: this.state.fromActualDate,
+      uid: this.state.userData?.uid,
+      name: this.state.userData?.name,
+      email: this.state.userData.email,
+      bookID: this.state.data.id,
+      bookName: this.state.data.name,
+      gerneId: this.state.data.gerneId,
+
+    }
+
+    console.log("DICT DATA ===> ", dictData)
+    firestore()
+    .collection('booksBooking')
+    .add(dictData)
+    .then(res => {
+      console.log('ADDED ===>', res);
+      Alert.alert("",
+        'Your Booking has been added successfully...',
+      );
+      this.props.navigation.pop();
+    })
+    .catch(error => {
+      console.log('Firebase Error : ' + error);
+    });
+  }
+
+
+  handleToDateSelect = () => {
+    if (this.state.fromDate == ""){
+      Alert.alert("", "Please select from date")
+    }else{
+      this.props.navigation.navigate('SelectDateScreen',{
+        handleDate: this.handleToDate,
+        toDate: true,
+        passdate: this.state.fromDate
+      })
+    }
+  }
 
   render() {
     const {
@@ -187,11 +299,7 @@ export default class BookSlotScreen extends Component {
             index: false
           }), require("../assets/images/clock.png"), "From Date")}
           {this.renderHeaderList("Select Booking To Date")}
-          {this.renderDataView(this.state.toDate, () => this.props.navigation.navigate('SelectDateScreen',{
-            handleDate: this.handleToDate,
-            toDate: true,
-            passdate: this.state.fromDate
-          }), require("../assets/images/clock.png"), "To Date")}
+          {this.renderDataView(this.state.toDate, () => this.handleToDateSelect(), require("../assets/images/clock.png"), "To Date")}
           
     
         </ScrollView>
@@ -199,10 +307,11 @@ export default class BookSlotScreen extends Component {
         {/* Proceed to Book with book */}
         <AppButton
             title={"Proceed to book"}
-            onPress={this.onPressAddBooking}
+            onPress={() => this.state.isAvailable ? this.handleValidation() : ""}
             style={{
               marginHorizontal: getWidth(20),
-              bottom: 20
+              bottom: 20,
+              backgroundColor: this.state.isAvailable ? color.darkBlue : color.cC4C4C4
             }}
         /> 
       </View>
