@@ -28,6 +28,7 @@ import CreateComputerSlotScreen from "../screens/CreateComputerSlotScreen";
 import SelectTimeScreen from "../screens/SelectTimeScreen";
 import CreateReadingSlotScreen from "../screens/CreateReadingSlotScreen";
 import EditStudentProfileScreen from "../screens/Students/EditStudentProfileScreen";
+import EditTeacherProfileScreen from "../screens/Teachers/EditTeacherProfileScreen";
 import TeacherAccountScreen from "../screens/Teachers/TeacherAccountScreen";
 import AdminNoticeListScreen from "../screens/Admin/AdminNoticeListScreen";
 import AddNotificationScreen from "../screens/Admin/AddNotificationScreen";
@@ -328,6 +329,17 @@ export default class MainNavigation extends React.Component {
             }}
           />
 
+          <Stack.Screen
+            name="EditTeacherProfileScreen"
+            component={EditTeacherProfileScreen}
+            options={{
+              headerShown: true,
+              title: "",
+              headerBackVisible: true,
+              headerTitleAlign: "center",
+              headerShadowVisible: false
+            }}
+          />
 
           <Stack.Screen
             name="TeacherAccountScreen"
