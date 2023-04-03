@@ -17,6 +17,7 @@ export const color = {
   menuOrange: '#F19357',
   lightGreyView: '#F1F6F9',
   black70: 'rgba(0, 0, 0, 0.70)',
+  black30: 'rgba(0, 0, 0, 0.30)',
   blackSubContent: '#14152B',
   orGrey: '#656565',
 };

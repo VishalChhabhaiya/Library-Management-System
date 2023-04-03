@@ -78,14 +78,30 @@ export default class StudentAccountScreen extends React.Component {
   render() {
     return (
       <View style={styles.main}>
-        <View style={{marginTop: getHeight(13)}} />
         <ScrollView>
           <TouchableOpacity 
             style={styles.vwGernes} 
-            onPress={() => Alert.alert("","Under Development")}
+            onPress={() => this.props.navigation.navigate("EditStudentProfileScreen")}
           >
             <Image source={require('../../assets/images/Profile5.png')} style={{marginRight: getWidth(10), height: getHeight(40), width: getHeight(40), aspectRatio: 1}}/>
             <Text style={styles.lblTitle}>{"Edit Profile"}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.vwGernes} 
+            onPress={() => this.props.navigation.navigate('CreateComputerSlotScreen')}
+          >
+            <Image source={require('../../assets/images/computer.png')} style={{marginRight: getWidth(10), height: getHeight(40), width: getHeight(40), aspectRatio: 1}}/>
+            <Text style={styles.lblTitle}>{"Book Computer Surfing"}</Text>
+          </TouchableOpacity>
+
+
+          <TouchableOpacity 
+            style={styles.vwGernes} 
+            onPress={() => this.props.navigation.navigate('CreateReadingSlotScreen')}
+          >
+            <Image source={require('../../assets/images/readBook.png')} style={{marginRight: getWidth(10), height: getHeight(40), width: getHeight(40), aspectRatio: 1}}/>
+            <Text style={styles.lblTitle}>{"Book Library Reading Slot"}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity 
@@ -95,10 +111,18 @@ export default class StudentAccountScreen extends React.Component {
             <Image source={require('../../assets/images/Event.png')} style={{marginRight: getWidth(10), height: getHeight(40), width: getHeight(40), aspectRatio: 1}}/>
             <Text style={styles.lblTitle}>{"See Events"}</Text>
           </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.vwGernes} 
+            onPress={() => this.props.navigation.navigate('NotificationListScreen')}
+          >
+            <Image source={require('../../assets/images/notification.png')} style={{marginRight: getWidth(10), height: getHeight(40), width: getHeight(40), aspectRatio: 1}}/>
+            <Text style={styles.lblTitle}>{"Notifications"}</Text>
+          </TouchableOpacity>
         </ScrollView>
 
         <TouchableOpacity 
-          style={[styles.vwGernes,{marginBottom: getHeight(40), justifyContent: "center"}]} 
+          style={[styles.vwGernes,{marginBottom: getHeight(30), justifyContent: "center"}]} 
           onPress={() => this.handleSignOut()}
         >
           <Text style={[styles.lblTitle,{textAlign: "center"}]}>{"Sign Out"}</Text>

@@ -17,6 +17,7 @@ import {
     getHeight,
     getWidth,
     opacity,
+    screenSize,
   } from '../../common/GConstant';
   import AppButton from '../../common/GComponant/AppButton';
   import {color} from '../../common/GColors';
@@ -31,19 +32,15 @@ import {
       super(props);
       this.state = {
         data: props.route.params?.data,
-        imgArray: [],
+        imgArray: [1],
         selectedPage: 0,
       };
     }
   
     componentDidMount() {
-      if (this.props.route.params?.data) {
-        console.log("DATA ====> ",this.props.route.params?.data)
-        let imageData = this.props.route.params?.data.thumbnailUrl
-        this.setState({
-            imgArray: [imageData]
-        })
-      }
+      // if (this.props.route.params?.data) {
+        console.log("DATANEW  ====> ",this.props.route.params?.data)
+      // }
   
       this.props.navigation.setOptions({
         headerTransparent: true,
@@ -60,8 +57,8 @@ import {
             height: ITEM_HEIGHT,
           }}>
             <Image
-              source={{uri: item}}
-              style={{height: '100%', width: '100%', resizeMode: 'cover'}}
+              source={require("../../assets/images/Book.png")}
+              style={{height: "100%", width: "100%", resizeMode: 'contain'}}
             />
         </View>
       );
@@ -101,18 +98,18 @@ import {
             scrollEnabled
             bounces={false}>
               <Text style={styles.title}>
-                {this.state.data?.title}
+                {this.state.data?.name}
               </Text>
               <Text style={styles.subTitle}>
               Author: {" "}
-                {this.state.data?.authors.toString()}
+                {this.state.data?.authorName.toString()}
               </Text>
               <Text style={styles.thirdTitle}>
-                Categories: {this.state.data?.categories.toString()}
+                Categories: {this.state.data?.gerneTitle.toString()}
               </Text>
               <Text style={styles.fouthTitle}>
               Description: {" "}
-                {this.state.data?.longDescription}
+                {this.state.data?.description}
               </Text>
           </ScrollView>
           <View
@@ -124,7 +121,9 @@ import {
           <View style={styles.bottom}>
             <AppButton
               title={'Book Now'}
-              onPress={() => Alert.alert("","Under Development")}
+              onPress={() => this.props.navigation.navigate("BookSlotScreen",{
+                data: this.state.data
+              })}
               style={{
                 paddingHorizontal: getWidth(20),
               }}

@@ -12,9 +12,12 @@ import {
 } from 'react-native';
 
 import {
+    asyncStorageKey,
   fontSize,
+  getData,
   getHeight,
   getWidth,
+  setData,
 } from '../../common/GConstant';
 import {color} from '../../common/GColors';
 import AppButton from '../../common/GComponant/AppButton';
@@ -25,7 +28,7 @@ import auth from '@react-native-firebase/auth';
 
 
 FontAwesomeIcon.loadFont();
-export default class SignUpTeachersScreen extends React.Component {
+export default class EditStudentProfileScreen extends React.Component {
   // Constructor method
   constructor(props) {
     super(props);
@@ -33,65 +36,62 @@ export default class SignUpTeachersScreen extends React.Component {
         name: "",
         email: "",
         phone: "",
-        password: "",
-        confirmPassword: "",
-        department: ""
+        userData: undefined
     };
   }
 
+  componentDidMount() {
+    this.getUserData()
+  }
 
+
+  getUserData = () => {
+    getData(asyncStorageKey.userData, data => {
+        console.log("USER DATA ===> ", data)
+        if (data != null) {
+            this.setState({
+                name: data?.name,
+                email: data?.email,
+                phone: data?.mobile,
+                userData: data
+            })
+        }
+    })
+  }
 
   handleSubmit = () => {
-    const { name, email, phone, password, department } = this.state
+    const { name, phone, userData } = this.state
     let error = this.validation()
+    var user = userData
+    user.mobile = phone
+    user.name = name
     if (error == "") {
-        auth().createUserWithEmailAndPassword(email.trim(), password.trim()).then((response) => {
-          
-          firestore()
-          .collection('user')
-          .add({
-            name: name,
-            mobile: phone,
-            email: email,
-            role: "teacher",
-            uid: response.user.uid,
-            department: department
-          })
-          .then(res => {
-            console.log('ADDED ===>', res);
-            Alert.alert("",
-              'User has been created successfully...',
-            );
-          })
-          .catch(error => {
-            console.log('Firebase Error : ' + error);
-          });
-        }).catch((error) => {
-          Alert.alert("",error.toString())
+        console.log("USER DATA ==> ", user)
+        firestore()
+        .collection('user').doc(user.id).update(user).then(res => {
+          console.log('ADDED ===>', res);
+          Alert.alert("",
+            'Your Profile has been updated successfully...',
+          );
+          setData(asyncStorageKey.userData, user)
+          this.props.navigation.pop();
         })
+        .catch(error => {
+          console.log('Firebase Error : ' + error);
+        }); 
     }else{
         Alert.alert("",error)
     }
   }
 
   validation = () => {
-    const { name,email, phone, password, confirmPassword, department } =  this.state
+    const { name,email, phone } =  this.state
     if (name.trim().length == 0) {
       return "Please enter name"
     }else if (email.trim().length == 0) {
         return "Please enter email"
     }else if (phone.trim().length == 0){
         return "Please enter phone number"
-    }else if (department.trim().length == 0) {
-      return "Please enter department"
-    } else if (password.trim().length == 0) {
-      return "Please enter password"
-    }else if (password.trim().length < 8) {
-      return "Please enter minimum 8 characters password"
-    } else if (confirmPassword.trim().length == 0) {
-      return "Please enter confirm password"
-    } else if (password.trim() != confirmPassword.trim()){
-      return "Password mismatch"
     }
     return ""
   }
@@ -111,7 +111,7 @@ export default class SignUpTeachersScreen extends React.Component {
           source={require('../../assets/images/Logo.png')}
           resizeMode="stretch"
         />
-        <Text style={style.lblSlogan}>The library is the heart of the school and the teacher is the pulse that keeps it beating.</Text>
+        
         <ScrollView>
           <View style={{
               marginHorizontal: getWidth(27),
@@ -143,6 +143,7 @@ export default class SignUpTeachersScreen extends React.Component {
                   returnKeyType={"done"}
                   style={style.txtInput}
                   value={this.state.email}
+                  editable={false}
                   onChangeText={(text) => this.setState({email: text})}
               />
               <Fumi
@@ -153,68 +154,16 @@ export default class SignUpTeachersScreen extends React.Component {
                   iconSize={20}
                   iconWidth={40}
                   inputPadding={16}
-                  keyboardType={"number-pad"}
+                  keyboardType={"email-address"}
                   returnKeyType={"done"}
                   style={style.txtInput}
                   value={this.state.phone}
                   maxLength={10}
                   onChangeText={(text) => this.setState({phone: text})}
               />
-              <Fumi
-                  label={'Department'}
-                  iconClass={FontAwesomeIcon}
-                  iconName={'university'}
-                  iconColor={color.darkBlue}
-                  iconSize={20}
-                  iconWidth={40}
-                  inputPadding={16}
-                  keyboardType={"email-address"}
-                  returnKeyType={"done"}
-                  style={style.txtInput}
-                  value={this.state.department}
-                  maxLength={10}
-                  onChangeText={(text) => this.setState({department: text})}
-              />
-              <Fumi
-                  label={'Password'}
-                  iconClass={FontAwesomeIcon}
-                  iconName={'lock'}
-                  iconColor={color.darkBlue}
-                  value={this.state.password}
-                  iconSize={20}
-                  iconWidth={40}
-                  inputPadding={16}
-                  keyboardType={"ascii-capable"}
-                  returnKeyType={"done"}
-                  style={style.txtInput}
-                  onChangeText={(text) => {this.setState({password: text})}}
-                  secureTextEntry
-              />
-
-              <Fumi
-                  label={'Confirm Password'}
-                  iconClass={FontAwesomeIcon}
-                  iconName={'lock'}
-                  iconColor={color.darkBlue}
-                  value={this.state.confirmPassword}
-                  iconSize={20}
-                  iconWidth={40}
-                  inputPadding={16}
-                  keyboardType={"ascii-capable"}
-                  returnKeyType={"done"}
-                  style={style.txtInput}
-                  onChangeText={(text) => {this.setState({confirmPassword: text})}}
-                  secureTextEntry
-              />
-          </View>
-          <AppButton style={style.btnSignup} title={'Sign Up'} onPress={() => this.handleSubmit()}/>
-          <View style = {style.vwLogin}>
-            <Text style={style.lblLogin}>Do you have an account ? </Text> 
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('SignInTeachersScreen')}>
-              <Text style={[style.lblLogin,{fontWeight: "700"}]}>Login</Text>
-            </TouchableOpacity>
           </View>
         </ScrollView>
+        <AppButton style={style.btnSignup} title={'Save'} onPress={() => this.handleSubmit()}/>
       </View>
     );
   }
@@ -231,7 +180,7 @@ const style = StyleSheet.create({
 
   // Button Styles
   btnSignup: {
-    marginTop: getHeight(30),
+    marginVertical: getHeight(30),
     marginHorizontal: getWidth(27),
   },
 
@@ -242,7 +191,7 @@ const style = StyleSheet.create({
     color: color.darkBlue
   },
   lblSlogan: {
-    marginHorizontal: getWidth(30),
+    marginHorizontal: getWidth(60),
     marginTop: getHeight(10),
     textAlign: "center",
     fontWeight: "bold",
@@ -255,8 +204,7 @@ const style = StyleSheet.create({
     marginHorizontal: getWidth(27), 
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: getHeight(20),
-    marginBottom: getHeight(20)
+    marginTop: getHeight(20)
   },
 
   //Text Input

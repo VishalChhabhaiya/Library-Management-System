@@ -28,7 +28,6 @@ export default class AllBooksListScreen extends React.Component {
   }
 
   componentDidMount() {
-
     // Header navigation setup
     this.props.navigation.addListener('focus', () => {
       this.getGerneData();
@@ -53,40 +52,39 @@ export default class AllBooksListScreen extends React.Component {
       headerTitle: "Books",
       headerShadowVisible: false, // Use to hide shadow under the navigation bar
     });
-
     // ========================================================================
   }
-getGerneData = async () => {
-  let gerneData = []
-  await firestore().collection('gerne').get().then((queryShot) => {
-    queryShot.forEach((item) => {
-      var gerne = item.data()
-      gerne["id"] = item.id
-      console.log("Gerne Data ===> ", gerne)
-      gerneData.push(gerne)
+
+  getGerneData = async () => {
+    let gerneData = []
+    await firestore().collection('gerne').get().then((queryShot) => {
+      queryShot.forEach((item) => {
+        var gerne = item.data()
+        gerne["id"] = item.id
+        console.log("Gerne Data ===> ", gerne)
+        gerneData.push(gerne)
+      })
     })
-  })
 
-  this.setState({
-    gerneData: gerneData
-  })
-}
-
-getBookData = async () => {
-  let bookData = []
-  await firestore().collection('book').get().then((queryShot) => {
-    queryShot.forEach((item) => {
-      var book = item.data()
-      book["id"] = item.id
-      console.log("Book Data ===> ", book)
-      bookData.push(book)
+    this.setState({
+      gerneData: gerneData
     })
-  })
+  }
 
-  this.setState({
-    bookData: bookData
-  })
-}
+  getBookData = async () => {
+    let bookData = []
+    await firestore().collection('book').get().then((queryShot) => {
+      queryShot.forEach((item) => {
+        var book = item.data()
+        book["id"] = item.id
+        bookData.push(book)
+      })
+    })
+
+    this.setState({
+      bookData: bookData
+    })
+  }
 
   
   // Render Method
