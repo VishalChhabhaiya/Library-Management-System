@@ -19,6 +19,7 @@ import {
 } from '../common/GConstant';
 import AppButton from '../common/GComponant/AppButton';
 import moment from 'moment';
+import firestore from '@react-native-firebase/firestore';
 
 export default class SelectTimeScreen extends React.Component {
   // Constructor method
@@ -28,32 +29,38 @@ export default class SelectTimeScreen extends React.Component {
       arrTimeSlots: [{
         id: 0,
         time: "09:00 AM",
-        isSelected: false
+        isSelected: false,
+        count: 0
       },
       {
         id: 1,
         time: "11:00 AM",
-        isSelected: false
+        isSelected: false,
+        count: 0
       },
       {
         id: 2,
         time: "01:00 PM",
-        isSelected: false
+        isSelected: false,
+        count: 0
       },
       {
         id: 3,
         time: "03:00 PM",
-        isSelected: false
+        isSelected: false,
+        count: 0
       },
       {
         id: 4,
         time: "05:00 PM",
-        isSelected: false
+        isSelected: false,
+        count: 0
       },
       {
         id: 5,
         time: "07:00 PM",
-        isSelected: false
+        isSelected: false,
+        count: 0
       }
     ],
     };
@@ -65,25 +72,55 @@ export default class SelectTimeScreen extends React.Component {
   };
 
   // Life Cycle Method
-  componentDidMount() {}
+  componentDidMount() {
+    this.getData()
+  }
 
-  handleSelection = (index) => {
+  getData = async() => {
+    let params = this.props.route.params
+    let table = params.type == "computer" ? "computerBooking" : "readBooking"
+    let bookedSlotData = []
+    await firestore().collection(table).where("date","==", params.date).get().then((queryShot) => {
+      queryShot.forEach((item) => {
+        var bookedSlot = item.data()
+        bookedSlot["id"] = item.id
+        bookedSlotData.push(bookedSlot)
+      })
+    })
+
+
+    this.state.arrTimeSlots.map((arrItem) => {
+      let count = bookedSlotData.filter((item) => item.time == arrItem.time).length
+      arrItem.count = count
+    })
+
+    this.forceUpdate()
+
+    console.log("BOOKED SLOT DATA ==> ", this.state.arrTimeSlots)
+  }
+
+  handleSelection = (index,dataIndex) => {
     console.log("Handle Selection ===> ", index)
     let timeData = this.state.arrTimeSlots
 
-    timeData.map((item) => { 
+    if (timeData[dataIndex]?.count >= 5) {
+        Alert.alert("","This slot is full")
+    }else{
+      timeData.map((item) => { 
         item.isSelected = (item.id == index.id)
     })
 
     this.setState({
         arrTimeSlots: timeData
     })
+    }
+    
   } 
 
   handleNavigation = () => {
     let selectedSlot = this.state.arrTimeSlots.filter((item) => item.isSelected == true) 
-
-    if (selectedSlot.length > 0) {
+    console.log(selectedSlot[0].count)
+    if (selectedSlot.length > 0 && selectedSlot[0].count < 5) {
         this.props.route.params.handleTime(selectedSlot[0]);
         this.props.navigation.pop()
     }else{
@@ -123,6 +160,7 @@ export default class SelectTimeScreen extends React.Component {
                 showsVerticalScrollIndicator={false}
                 data={this.state.arrTimeSlots}
                 renderItem={(item,index) => {
+                  console.log("COUNNT ===> ", item.item?.count)
                     return (
                     <Pressable
                         style={{
@@ -134,12 +172,12 @@ export default class SelectTimeScreen extends React.Component {
                             width: "25%",
                             justifyContent: "center",
                             borderRadius: getWidth(5),
-                            backgroundColor: item.item?.isSelected ? color.darkBlue : color.cC4C4C4
+                            backgroundColor: item.item?.count >= 5 ? color.red : item.item?.isSelected ? color.darkBlue : color.cC4C4C4
                         }}
-                        onPress={() => this.handleSelection(item.item)}
+                        onPress={() => this.handleSelection(item.item,index)}
                         >
                             <Text style={{
-                                color: item.item?.isSelected ? color.white : color.black
+                                color: item.item?.count >= 5 ? color.white :item.item?.isSelected ? color.white : color.black
                             }}>{item.item?.time}</Text>
                         </Pressable>
                     );

@@ -149,6 +149,18 @@ export default class CreateComputerSlotScreen extends Component {
     });
   }
 
+  handleTimeNavigation = () => {
+    if (this.state.fromDate.trim() == ""){
+      Alert.alert("","Please select date");
+    }else{
+      this.props.navigation.navigate('SelectTimeScreen',{
+        handleTime: this.handleTime,
+        date: this.state.fromDate,
+        type: "computer"
+      })
+    }
+  }
+
   render() {
     return (
       <View style={styles.main}>
@@ -175,9 +187,7 @@ export default class CreateComputerSlotScreen extends Component {
             index: false
           }), require("../assets/images/clock.png"), "Select Date")}
           {this.renderHeaderList("Select Time Slot")}
-          {this.renderDataView(this.state.timing, () => this.props.navigation.navigate('SelectTimeScreen',{
-            handleTime: this.handleTime,
-          }), require("../assets/images/clock.png"), "Time Slot")}
+          {this.renderDataView(this.state.timing, () => this.handleTimeNavigation(), require("../assets/images/clock.png"), "Time Slot")}
           
     
         </ScrollView>

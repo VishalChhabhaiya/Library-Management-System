@@ -51,7 +51,8 @@ export default class SignInStudentScreen extends React.Component {
             Alert.alert("","Please check your credentials")
           }else{
             querySnapShot.docs.map((item) => {
-              console.log("Data  ===> ", item.data())
+              console.log("Data  ===> ", item.data(), item.id)
+              item.data().id = item.id
               setData(asyncStorageKey.userData, item.data())
               this.props.navigation.dispatch(
                 CommonActions.reset({
