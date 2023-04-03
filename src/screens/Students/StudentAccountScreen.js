@@ -81,7 +81,7 @@ export default class StudentAccountScreen extends React.Component {
         <ScrollView>
           <TouchableOpacity 
             style={styles.vwGernes} 
-            onPress={() => Alert.alert("","Under Development")}
+            onPress={() => this.props.navigation.navigate("EditStudentProfileScreen")}
           >
             <Image source={require('../../assets/images/Profile5.png')} style={{marginRight: getWidth(10), height: getHeight(40), width: getHeight(40), aspectRatio: 1}}/>
             <Text style={styles.lblTitle}>{"Edit Profile"}</Text>
