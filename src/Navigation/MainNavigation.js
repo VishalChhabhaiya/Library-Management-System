@@ -30,6 +30,9 @@ import CreateReadingSlotScreen from "../screens/CreateReadingSlotScreen";
 import EditStudentProfileScreen from "../screens/Students/EditStudentProfileScreen";
 import EditTeacherProfileScreen from "../screens/Teachers/EditTeacherProfileScreen";
 import TeacherAccountScreen from "../screens/Teachers/TeacherAccountScreen";
+import TeachersBookingHistoryScreen from "../screens/Teachers/TeachersBookingHistoryScreen";
+import StudentBookingHistoryScreen from "../screens/Students/StudentBookingHistoryScreen";
+import BookingHistoryScreen from "../screens/Admin/BookingHistoryScreen";
 import AdminNoticeListScreen from "../screens/Admin/AdminNoticeListScreen";
 import AddNotificationScreen from "../screens/Admin/AddNotificationScreen";
 import NotificationListScreen from "../screens/NotificationListScreen";
@@ -353,6 +356,45 @@ export default class MainNavigation extends React.Component {
             }}
           />
 
+
+          <Stack.Screen
+            name="TeachersBookingHistoryScreen"
+            component={TeachersBookingHistoryScreen}
+            options={{
+              headerShown: true,
+              title: "",
+              headerBackVisible: true,
+              headerTitleAlign: "center",
+              headerShadowVisible: false
+            }}
+          />
+
+
+          <Stack.Screen
+            name="StudentBookingHistoryScreen"
+            component={StudentBookingHistoryScreen}
+            options={{
+              headerShown: true,
+              title: "",
+              headerBackVisible: true,
+              headerTitleAlign: "center",
+              headerShadowVisible: false
+            }}
+          />
+
+
+          <Stack.Screen
+            name="BookingHistoryScreen"
+            component={BookingHistoryScreen}
+            options={{
+              headerShown: true,
+              title: "",
+              headerBackVisible: true,
+              headerTitleAlign: "center",
+              headerShadowVisible: false
+            }}
+          />
+
           <Stack.Screen
             name="AdminNoticeListScreen"
             component={AdminNoticeListScreen}
@@ -377,6 +419,7 @@ export default class MainNavigation extends React.Component {
               headerShadowVisible: false
             }}
           />
+
 
           <Stack.Screen
             name="NotificationListScreen"

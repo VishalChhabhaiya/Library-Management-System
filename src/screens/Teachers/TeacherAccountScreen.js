@@ -115,6 +115,15 @@ export default class TeacherAccountScreen extends React.Component {
 
           <TouchableOpacity 
             style={styles.vwGernes} 
+            onPress={() => this.props.navigation.navigate('TeachersBookingHistoryScreen')}
+          >
+            <Image source={require('../../assets/images/order.png')} style={{marginRight: getWidth(10), height: getHeight(40), width: getHeight(40), aspectRatio: 1}}/>
+            <Text style={styles.lblTitle}>{"My Booking History"}</Text>
+          </TouchableOpacity>
+
+
+          <TouchableOpacity 
+            style={styles.vwGernes} 
             onPress={() => this.props.navigation.navigate('NotificationListScreen')}
           >
             <Image source={require('../../assets/images/notification.png')} style={{marginRight: getWidth(10), height: getHeight(40), width: getHeight(40), aspectRatio: 1}}/>

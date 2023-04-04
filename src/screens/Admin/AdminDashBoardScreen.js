@@ -77,6 +77,10 @@ handleSignOut = () => {
           <Text style={style.lblTitle}>{"See all Books"}</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity style={style.vwGernes} onPress={() => this.props.navigation.navigate('BookingHistoryScreen')}>
+          <Text style={style.lblTitle}>{"See all Books Bookings"}</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity style={style.vwGernes} onPress={() => this.props.navigation.navigate('AdminNoticeListScreen')}>
           <Text style={style.lblTitle}>{"See all Notifications"}</Text>
         </TouchableOpacity>
