@@ -36,6 +36,7 @@ import BookingHistoryScreen from "../screens/Admin/BookingHistoryScreen";
 import AdminNoticeListScreen from "../screens/Admin/AdminNoticeListScreen";
 import AddNotificationScreen from "../screens/Admin/AddNotificationScreen";
 import NotificationListScreen from "../screens/NotificationListScreen";
+import EditStudentProfileScreen from "../screens/Students/EditStudentProfileScreen";
 
 const Stack = createNativeStackNavigator();
 const ModalStack = createNativeStackNavigator();
@@ -101,7 +102,8 @@ export default class MainNavigation extends React.Component {
               headerShadowVisible: false
             }}
           />
-           <Stack.Screen
+
+          <Stack.Screen
             name="SignUpTeachersScreen"
             component={SignUpTeachersScreen}
             options={{
@@ -174,31 +176,6 @@ export default class MainNavigation extends React.Component {
               headerShadowVisible: false
             }}
           />
-
-          <Stack.Screen
-            name="AllBooksListScreen"
-            component={AllBooksListScreen}
-            options={{
-              headerShown: true,
-              title: "",
-              headerBackVisible: true,
-              headerTitleAlign: "center",
-              headerShadowVisible: false
-            }}
-          />
-
-          <Stack.Screen
-            name="AddBookScreen"
-            component={AddBookScreen}
-            options={{
-              headerShown: true,
-              title: "",
-              headerBackVisible: true,
-              headerTitleAlign: "center",
-              headerShadowVisible: false
-            }}
-          />
-
 
           <Stack.Screen
             name="StudentDashBoardScreen"
@@ -275,6 +252,30 @@ export default class MainNavigation extends React.Component {
           <Stack.Screen
             name="AddEventScreen"
             component={AddEventScreen}
+            options={{
+              headerShown: true,
+              title: "",
+              headerBackVisible: true,
+              headerTitleAlign: "center",
+              headerShadowVisible: false
+            }}
+          />
+
+          <Stack.Screen
+            name="AllBooksListScreen"
+            component={AllBooksListScreen}
+            options={{
+              headerShown: true,
+              title: "",
+              headerBackVisible: true,
+              headerTitleAlign: "center",
+              headerShadowVisible: false
+            }}
+          />
+
+          <Stack.Screen
+            name="AddBookScreen"
+            component={AddBookScreen}
             options={{
               headerShown: true,
               title: "",
@@ -407,7 +408,6 @@ export default class MainNavigation extends React.Component {
             }}
           />
 
-
           <Stack.Screen
             name="AddNotificationScreen"
             component={AddNotificationScreen}
@@ -433,7 +433,17 @@ export default class MainNavigation extends React.Component {
             }}
           />
 
-
+          <Stack.Screen
+            name="EditStudentProfileScreen"
+            component={EditStudentProfileScreen}
+            options={{
+              headerShown: true,
+              title: "",
+              headerBackVisible: true,
+              headerTitleAlign: "center",
+              headerShadowVisible: false
+            }}
+          />
         </Stack.Navigator>
       );
     };
@@ -473,7 +483,7 @@ export default class MainNavigation extends React.Component {
               }}
             />
 
-            <ModalStack.Screen
+          <ModalStack.Screen
             name="SelectTimeScreen"
             component={SelectTimeScreen}
             options={{
@@ -481,7 +491,6 @@ export default class MainNavigation extends React.Component {
               headerBackVisible: false,
             }}
           />
-           
           </ModalStack.Navigator>
         </NavigationContainer>
       </View>
